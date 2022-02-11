@@ -1,11 +1,7 @@
 package visao;
 
 import java.awt.GridLayout;
-import java.util.Iterator;
-
-import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import modelo.Tabuleiro;
 
 @SuppressWarnings("serial")
@@ -16,6 +12,9 @@ public class PainelTabuleiro extends JPanel { //JPanel agrupador tipo containner
 		setLayout(new GridLayout(
 				tabuleiro.getLinhas(), tabuleiro.getColunas()));
 		
-		tabuleiro.paraCada(c -> add(new ButaoCampo(c)));
+		tabuleiro.paraCadaCampo(c -> add(new ButaoCampo(c)));		
+		tabuleiro.registrarObservador(e -> {
+			//TODO mostrar resultado  para usuario
+		});
 	}
 }
