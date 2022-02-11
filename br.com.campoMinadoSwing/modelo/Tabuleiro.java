@@ -65,14 +65,11 @@ public class Tabuleiro implements CampoObservador {
 	public void eventoOcorreu(Campo campo, CampoEvento evento) {
 		
 		if(evento == CampoEvento.EXPLODIR) {
-			
-			System.out.println("Perdeu... :(");
+			//System.out.println("Perdeu... :(");
 			mostrarMinas();
 			notificarObservadores(false);
-			
 		}else if(objetivoAlcancado()) {
-			
-			System.out.println("Ganhou... :)");
+			//System.out.println("Ganhou... :)");
 			notificarObservadores(true);
 		}	
 		
@@ -81,6 +78,7 @@ public class Tabuleiro implements CampoObservador {
 	private void mostrarMinas() {
 		campos.stream()
 		.filter(c -> c.isMinado())
+		.filter(c -> !c.isMarcado())
 		.forEach(c -> c.setAberto(true));
 	}
 	
@@ -117,7 +115,6 @@ public class Tabuleiro implements CampoObservador {
 		long minasArmadas = 0;
 		Predicate<Campo> minado = c -> c.isMinado();
 		do {
-			
 			int aleatorio = (int) (Math.random() * campos.size());
 			minasArmadas = campos.stream().filter(minado).count();
 			campos.get(aleatorio).minar();

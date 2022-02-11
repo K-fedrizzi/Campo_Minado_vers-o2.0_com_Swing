@@ -28,7 +28,7 @@ public class Campo {
 		observadores.stream().forEach(obs -> obs.eventoOcorreu(this, evento));
 	}
 	
-	boolean adicionarVizinho(Campo vizinho) {
+	public boolean adicionarVizinho(Campo vizinho) {
 		boolean linhaDiferente = linha != vizinho.linha;
 		boolean colunaDiferente = coluna != vizinho.coluna;
 		boolean diagonal = linhaDiferente && colunaDiferente;
@@ -49,7 +49,7 @@ public class Campo {
 		}
 	}
 	
-	void alternarMarcacao() {
+	public void alternarMarcacao() {
 		if(!aberto) {
 			marcado = !marcado;
 			if(marcado) {
@@ -60,7 +60,7 @@ public class Campo {
 		}
 	}
 	
-	boolean abrir() {
+	public boolean abrir() {
 		if(!aberto && !marcado) {
 			aberto  = true;
 			
@@ -80,11 +80,11 @@ public class Campo {
 		}else {return false;}	
 	}
 	
-	boolean vizinhancaSegura() {
+	public boolean vizinhancaSegura() {
 		return vizinhos.stream().noneMatch( v -> v.minado);
 	}
 	
-	void minar() {
+	public void minar() {
 		if(!minado){
 			minado = true;
 		}
@@ -126,19 +126,21 @@ public class Campo {
 		return coluna;
 	}
 	
-	boolean objetivoAlcancado() {
+	public boolean objetivoAlcancado() {
 		boolean desvendado = !minado && aberto;
 		boolean protegido  = minado && marcado;
 		return desvendado || protegido;
 	}
 	
-	long minasNaVizinhanca() {
-		return vizinhos.stream().filter(v -> v.minado).count();
+	public int minasNaVizinhanca() {
+		return (int) vizinhos.stream().filter(v -> v.minado).count();
 	}
 	
-	void reiniciar() { // reiniciar o jogo novamente
+	public void reiniciar() { // reiniciar o jogo novamente
 		aberto = false;
 		minado = false;
 		marcado = false;
+		
+		notificarObservadores(CampoEvento.REINICIAR);
 	}
 }
